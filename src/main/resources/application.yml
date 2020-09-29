@@ -1,0 +1,30 @@
+server:
+  port: 9000
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  kafka:
+    template:
+      default-topic: listener
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: group-id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    ssl:
+      properties:
+        security:
+          protocol: SASL_SSL
+        sasl:
+          mechanism: GSSAPI
+          kerberos:
+            service:
+              name: kafka
+    producer:
+      ack: all
+      bootstrap-servers: localhost:9092
+      useNativeEncoding: true
+      contentType: application/json
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
